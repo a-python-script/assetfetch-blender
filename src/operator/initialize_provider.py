@@ -1,10 +1,11 @@
 import logging
+
 import bpy
 
+from ..property.core import *
+from ..property.preferences import *
 from ..property.templates import AF_VariableQueryUpdateTarget
 from ..util import http
-from ..property.preferences import *
-from ..property.core import *
 
 LOGGER = logging.getLogger("af.ops.initialize_provider")
 LOGGER.setLevel(logging.DEBUG)

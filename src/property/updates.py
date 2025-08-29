@@ -1,8 +1,9 @@
 """This module contains the update functions that handle changes of properties."""
 
-from enum import Enum
 import logging
 import os
+from enum import Enum
+
 import bpy
 
 LOGGER = logging.getLogger("af.property.updates")

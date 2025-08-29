@@ -1,5 +1,6 @@
-import random
+
 import bpy
+
 from ..property.core import *
 
 

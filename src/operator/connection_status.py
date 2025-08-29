@@ -1,4 +1,7 @@
-import bpy, logging
+import logging
+
+import bpy
+
 from ..util import http
 from ..util.addon_constants import *
 

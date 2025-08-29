@@ -2,10 +2,11 @@
 
 import bpy
 from bpy.types import Context
-from .provider_panel import *
+
 from .asset_panel import *
 from .implementations_panel import *
 from .preferences import *
+from .provider_panel import *
 
 
 def register():

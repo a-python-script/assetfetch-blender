@@ -1,6 +1,6 @@
 import bpy
 import bpy_extras.image_utils
-from . import af_constants
+
 
 
 def create_world(world_name: str, hdr_image_path: str, af_namespace: str):

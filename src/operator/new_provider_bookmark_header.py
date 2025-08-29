@@ -1,5 +1,7 @@
 import bpy
+
 from ..property.preferences import *
+
 
 class AF_OP_NewProviderBookmarkHeader(bpy.types.Operator):
 	"""Adds a new header to the currently selected provider bookmark."""

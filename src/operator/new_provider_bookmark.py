@@ -1,5 +1,7 @@
 import bpy
+
 from ..property.preferences import *
+
 
 class AF_OP_NewProviderBookmark(bpy.types.Operator):
 	"""Creates a new provider bookmark."""

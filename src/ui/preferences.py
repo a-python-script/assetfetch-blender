@@ -1,6 +1,7 @@
 import bpy
-from ..property.templates import *
+
 from ..property.preferences import *
+from ..property.templates import *
 
 
 class AF_UL_ProviderBookmarksItems(bpy.types.UIList):

@@ -1,5 +1,11 @@
+import hashlib
+import logging
+import os
+import shutil
+
+import bpy
+
 from . import http
-import logging, bpy, os, hashlib, shutil
 
 LOGGER = logging.getLogger("af.util.ui_images")
 LOGGER.setLevel(logging.DEBUG)

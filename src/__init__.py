@@ -2,7 +2,9 @@
 It houses the main register() and unregister() functions for the addon along with required metadata.
 """
 
-import os, sys
+import os
+import sys
+
 import bpy
 
 print("Loading AssetFetch for Blender v0.3.0")

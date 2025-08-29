@@ -1,13 +1,13 @@
 """This module contains all data classes. This includes core data for the addon itself, as well as representations of all datablocks."""
 
 import os
-from typing import Dict
+
 import bpy
 
 from .core import *
 from .datablocks import *
-from .templates import *
 from .preferences import *
+from .templates import *
 
 
 def register():

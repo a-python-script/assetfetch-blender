@@ -1,14 +1,16 @@
 import logging
-import random
-from typing import Dict, List, Set
+import os
+import shutil
+import tempfile
+import uuid
 import zipfile
+
+import bpy
 from bpy.types import Context, Event
-import bpy, bpy_extras, uuid, tempfile, os, shutil
-import bpy_extras.image_utils
 
 from ..property.core import *
+from ..util import af_constants, http, material, world
 from ..util.addon_constants import *
-from ..util import http, material, af_constants, world
 
 # Prepare logging
 LOGGER = logging.getLogger("af.execute_import_plan")
@@ -57,7 +59,7 @@ class AF_OP_ExecuteImportPlan(bpy.types.Operator):
 
 	# HELPER FUNCTIONS
 
-	def helper_assign_loose_materials(self, link_loose_material_block, target_blender_objects: List[bpy.types.Object], af_namespace: str):
+	def helper_assign_loose_materials(self, link_loose_material_block, target_blender_objects: list[bpy.types.Object], af_namespace: str):
 		"""Takes in a link.loose_material datablock and a list of Blender objects and applies the materials as defined.
 		This function is used when importing geometry files like obj/fbx/..."""
 		if link_loose_material_block.is_set:

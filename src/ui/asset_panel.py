@@ -1,10 +1,9 @@
 import logging
-import os
-import uuid
+
 import bpy
 
 from ..property.core import *
-from ..util import http, ui_images
+from ..util import ui_images
 
 LOGGER = logging.getLogger("af.ui.asset_panel")
 LOGGER.setLevel(logging.DEBUG)

@@ -1,11 +1,13 @@
 import logging
-import bpy, os
+import os
 
-from .updates import *
-from .templates import *
-from .datablocks import *
+import bpy
+
 from ..util.addon_constants import *
+from .datablocks import *
 from .preferences import *
+from .templates import *
+from .updates import *
 
 LOGGER = logging.getLogger("af.property.core")
 LOGGER.setLevel(logging.DEBUG)

@@ -1,7 +1,10 @@
-import bpy, os
+import os
+
+import bpy
+
+from ..property.core import *
 from ..util.addon_constants import *
 from ..util.af_constants import *
-from ..property.core import *
 
 
 class AF_OP_BuildImportPlans(bpy.types.Operator):

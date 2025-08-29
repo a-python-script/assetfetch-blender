@@ -2,6 +2,7 @@
 places throughout the addon."""
 
 import bpy
+
 from ..util.http import *
 from .updates import *
 

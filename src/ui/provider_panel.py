@@ -1,5 +1,7 @@
 import bpy
+
 from ..property.preferences import *
+
 
 class AF_PT_ProviderPanel(bpy.types.Panel):
 	"""Class for rendering the provider selection panel."""

@@ -1,6 +1,7 @@
-from enum import Enum
+
 import bpy
 import bpy_extras.image_utils
+
 from . import af_constants
 
 

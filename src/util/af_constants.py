@@ -2,6 +2,7 @@
 
 from enum import Enum
 
+
 class AF_MaterialMap(Enum):
 	albedo = "albedo"
 	roughness = "roughness"

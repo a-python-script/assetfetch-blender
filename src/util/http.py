@@ -1,15 +1,10 @@
-import datetime
-import json, requests, tempfile, os
-import time
-import random
+import json
 import logging
-import pathlib
-from enum import Enum
-from typing import List, Dict
+import os
+
 import bpy
 import jsonschema
-
-from functools import partial
+import requests
 
 from .. import SCHEMA_PATH
 
@@ -28,7 +23,7 @@ class AF_HttpResponse:
 		self.response_code = raw_response.status_code
 		try:
 			self.parsed = json.loads(self.content)
-		except Exception as e:
+		except Exception:
 			self.parsed = {}
 
 		# Figure out which "kind" of response this is.
@@ -59,7 +54,7 @@ class AF_HttpQuery:
 	# The standard headers that get sent with every request (along with any auth headers)
 	default_headers = {"User-Agent": f"blender/{bpy.app.version_string} assetfetch-blender/0.3"}
 
-	def __init__(self, uri: str, method: str, parameters: Dict[str, str] = None, chunk_size: int = 128 * 1024 * 8):
+	def __init__(self, uri: str, method: str, parameters: dict[str, str] = None, chunk_size: int = 128 * 1024 * 8):
 		self.uri = uri
 		if (method in ['get', 'post']):
 			self.method = method

@@ -1,8 +1,7 @@
 import logging
-import bpy, os, shutil, tempfile, uuid
 
-from ..util import http
-from ..ui import AF_PT_AssetPanel
+import bpy
+
 
 LOGGER = logging.getLogger("af.ops.update_asset_list")
 LOGGER.setLevel(logging.DEBUG)

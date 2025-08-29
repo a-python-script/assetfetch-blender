@@ -1,6 +1,7 @@
 """This module contains the relevant classes for the addon's preferences."""
 
 import bpy
+
 from .. import ADDON_NAME
 from .templates import *
 from .updates import *

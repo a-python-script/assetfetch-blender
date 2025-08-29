@@ -1,12 +1,13 @@
 """This module contains blender bpy representations of all AssetFetch datablocks that are supported by the addon."""
 
 import logging
-import uuid
-import bpy, re
+import re
 
-from .updates import *
+import bpy
+
+from ..util import addon_constants, af_constants
 from .templates import *
-from ..util import af_constants, addon_constants
+from .updates import *
 
 LOGGER = logging.getLogger("af.property.datablocks")
 LOGGER.setLevel(logging.DEBUG)

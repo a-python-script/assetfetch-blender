@@ -2,7 +2,7 @@
 import bpy
 import bpy_extras.image_utils
 
-from . import af_constants
+from .af_constants import AF_MaterialMap
 
 
 def get_or_create_material(material_name: str, af_namespace: str):
@@ -49,7 +49,7 @@ def count_image_nodes(shader_tree: bpy.types.NodeTree):
 	return image_node_count
 
 
-def add_map_to_material(target_material: bpy.types.Material, map: af_constants.AF_MaterialMap, image_target_path: str):
+def add_map_to_material(target_material: bpy.types.Material, map: AF_MaterialMap, image_target_path: str):
 	"""Adds a new PBR map to a given material."""
 
 	# Import the file from local_path into blender
@@ -76,20 +76,20 @@ def add_map_to_material(target_material: bpy.types.Material, map: af_constants.A
 	bsdf_inputs = target_material.node_tree.nodes['BSDF'].inputs
 
 	# Color Map
-	if map in [af_constants.AF_MaterialMap.albedo, af_constants.AF_MaterialMap.diffuse]:
+	if map in [AF_MaterialMap.albedo, AF_MaterialMap.diffuse]:
 		color_image_node = target_material.node_tree.links.new(image_color_out, bsdf_inputs['Base Color'])
 
 	# Normal Map
-	if map in [af_constants.AF_MaterialMap.normal_plus_y, af_constants.AF_MaterialMap.normal_minus_y]:
+	if map in [AF_MaterialMap.normal_plus_y, AF_MaterialMap.normal_minus_y]:
 		normal_map_node = target_material.node_tree.nodes.new(type="ShaderNodeNormalMap")
 		normal_map_node.location.x = 800
 		normal_map_node.location.y = current_vertical_node_position
 		target_material.node_tree.links.new(normal_map_node.outputs['Normal'], target_material.node_tree.nodes['BSDF'].inputs['Normal'])
 
-	if map == af_constants.AF_MaterialMap.normal_plus_y:
+	if map == AF_MaterialMap.normal_plus_y:
 		target_material.node_tree.links.new(image_node.outputs['Color'], normal_map_node.inputs['Color'])
 
-	if map == af_constants.AF_MaterialMap.normal_minus_y:
+	if map == AF_MaterialMap.normal_minus_y:
 		# Green channel must be inverted
 		# Separate Color
 		separate_color_node = target_material.node_tree.nodes.new(type="ShaderNodeSeparateColor")
@@ -112,11 +112,11 @@ def add_map_to_material(target_material: bpy.types.Material, map: af_constants.A
 		target_material.node_tree.links.new(combine_color_node.outputs['Color'], normal_map_node.inputs['Color'])
 
 	# Roughness Map
-	if map == af_constants.AF_MaterialMap.roughness:
+	if map == AF_MaterialMap.roughness:
 		target_material.node_tree.links.new(image_color_out, bsdf_inputs['Roughness'])
 
 	# Glossiness
-	if map == af_constants.AF_MaterialMap.glossiness:
+	if map == AF_MaterialMap.glossiness:
 		# Map needs to be inverted
 		invert_roughness_node = target_material.node_tree.nodes.new(type="ShaderNodeInvert")
 		invert_roughness_node.location.y = current_vertical_node_position
@@ -125,11 +125,11 @@ def add_map_to_material(target_material: bpy.types.Material, map: af_constants.A
 		target_material.node_tree.links.new(invert_roughness_node.outputs['Color'], bsdf_inputs['Roughness'])
 
 	# Metalness Map
-	if map == af_constants.AF_MaterialMap.metallic:
+	if map == AF_MaterialMap.metallic:
 		target_material.node_tree.links.new(image_color_out, bsdf_inputs['Metallic'])
 
 	# Height
-	if map == af_constants.AF_MaterialMap.height:
+	if map == AF_MaterialMap.height:
 		displacement_node = target_material.node_tree.nodes.new("ShaderNodeDisplacement")
 		displacement_node.location.x = 400
 		displacement_node.location.y = current_vertical_node_position
@@ -137,9 +137,9 @@ def add_map_to_material(target_material: bpy.types.Material, map: af_constants.A
 		target_material.node_tree.links.new(displacement_node.outputs['Displacement'], target_material.node_tree.nodes['OUTPUT'].inputs['Displacement'])
 
 	# Opacity
-	if map == af_constants.AF_MaterialMap.opacity:
+	if map == AF_MaterialMap.opacity:
 		target_material.node_tree.links.new(image_color_out, bsdf_inputs['Alpha'])
 
 	# Emission
-	if map == af_constants.AF_MaterialMap.emission:
+	if map == AF_MaterialMap.emission:
 		target_material.node_tree.links.new(image_color_out, bsdf_inputs['Emission Color'])

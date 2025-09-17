@@ -5,7 +5,6 @@ It houses the main register() and unregister() functions for the addon along wit
 import os
 import sys
 
-import bpy
 
 print("Loading AssetFetch for Blender v0.3.0")
 
@@ -17,7 +16,7 @@ print("Loading AssetFetch for Blender v0.3.0")
 # TODO: With the introduction of Blender 4.2 this generates a small warning message, therefore it will likely need to be changed in the future.
 LIB_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib")
 if LIB_PATH not in sys.path:
-	sys.path.insert(0, LIB_PATH)
+    sys.path.insert(0, LIB_PATH)
 
 # The SCHEMA path points to the directory containing the JSON-Schema required for validating all incoming responses.
 # Like with the libraries, instructions for filling the json-schema directory for development can be found in readme.md
@@ -27,33 +26,30 @@ ADDON_NAME = __package__
 
 
 def register():
-	"""The main registration function for the entire addon.
-	It calls the other registration functions to load all modules.
-	"""
-	from .property import register
-	property.register()
+    """The main registration function for the entire addon.
+    It calls the other registration functions to load all modules.
+    """
+    from .property import register as register_properties
+    from .operator import register as register_operators
+    from .ui import register as register_ui
+    from .util.ui_images import reset_image_cache
 
-	from .operator import register
-	operator.register()
-
-	from .ui import register
-	ui.register()
-
-	from .util.ui_images import reset_image_cache
-	reset_image_cache()
+    register_properties()
+    register_operators()
+    register_ui()
+    reset_image_cache()
+    property.register()
 
 
 def unregister():
-	"""Main unregistration function for the entire addon (used during uninstallation)."""
+    """Main unregistration function for the entire addon (used during uninstallation)."""
 
-	from .util.ui_images import reset_image_cache
-	reset_image_cache()
+    from .util.ui_images import reset_image_cache
+    from .ui import unregister as unregister_ui
+    from .operator import unregister as unregister_operators
+    from .property import unregister as unregister_properties
 
-	from .ui import unregister
-	ui.unregister()
-
-	from .operator import unregister
-	operator.unregister()
-
-	from .property import unregister
-	property.unregister()
+    reset_image_cache()
+    unregister_ui()
+    unregister_operators()
+    unregister_properties()

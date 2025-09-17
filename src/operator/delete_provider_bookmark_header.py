@@ -1,6 +1,6 @@
 import bpy
 
-from ..property.preferences import *
+from ..property.preferences import AF_PR_Preferences
 
 
 class AF_OP_DeleteProviderBookmarkHeader(bpy.types.Operator):

@@ -2,7 +2,6 @@ import logging
 
 import bpy
 
-
 LOGGER = logging.getLogger("af.ops.update_asset_list")
 LOGGER.setLevel(logging.DEBUG)
 

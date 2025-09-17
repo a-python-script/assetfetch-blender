@@ -2,8 +2,8 @@ import logging
 
 import bpy
 
-from ..util import http
-from ..util.addon_constants import *
+from ..util.addon_constants import AF_ConnectionState
+from ..util.http import AF_HttpQuery, AF_HttpResponse
 
 LOGGER = logging.getLogger("af.ops.connection_status")
 LOGGER.setLevel(logging.DEBUG)
@@ -41,8 +41,8 @@ class AF_OP_ConnectionStatus(bpy.types.Operator):
 
 			# Contact initialization endpoint and get the response from the provider
 			LOGGER.info("Refreshing connection status.")
-			query: http.AF_HttpQuery = af.current_provider_initialization.provider_configuration.connection_status_query.to_http_query()
-			response: http.AF_HttpResponse = query.execute()
+			query: AF_HttpQuery = af.current_provider_initialization.provider_configuration.connection_status_query.to_http_query()
+			response: AF_HttpResponse = query.execute()
 
 			# Set user data if available
 			if "user" in response.parsed['data']:

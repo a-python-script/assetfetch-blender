@@ -2,7 +2,6 @@ import bpy
 import bpy_extras.image_utils
 
 
-
 def create_world(world_name: str, hdr_image_path: str, af_namespace: str):
 	"""Returns a Blender World (existing or newly created) with the given name, AF Namespace, and sets up HDRI image."""
 

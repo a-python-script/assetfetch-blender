@@ -8,9 +8,17 @@ import zipfile
 import bpy
 from bpy.types import Context, Event
 
-from ..property.core import *
-from ..util import af_constants, http, material, world
-from ..util.addon_constants import *
+from ..property.core import (
+	AF_PR_AssetFetch,
+	AF_PR_Implementation,
+	AF_PR_ImplementationImportStep,
+	AF_PR_ImplementationList,
+)
+from ..util.addon_constants import AF_ImportAction, AF_ImportActionState
+from ..util.af_constants import AF_MaterialMap
+from ..util.http import AF_HttpQuery
+from ..util.material import add_map_to_material, get_or_create_material
+from ..util.world import create_world
 
 # Prepare logging
 LOGGER = logging.getLogger("af.execute_import_plan")
@@ -65,7 +73,7 @@ class AF_OP_ExecuteImportPlan(bpy.types.Operator):
 		if link_loose_material_block.is_set:
 			for obj in target_blender_objects:
 				obj.data.materials.clear()
-				target_material = material.get_or_create_material(material_name=link_loose_material_block.material_name, af_namespace=af_namespace)
+				target_material = get_or_create_material(material_name=link_loose_material_block.material_name, af_namespace=af_namespace)
 				obj.data.materials.append(target_material)
 
 	# STEP FUNCTIONS
@@ -73,7 +81,7 @@ class AF_OP_ExecuteImportPlan(bpy.types.Operator):
 	def step_unlock(self, query_id: str) -> AF_ImportActionState:
 		"""Perform an unlock query."""
 		unlock_query = self.implementation_list.get_unlock_query_by_id(query_id)
-		query: http.AF_HttpQuery = unlock_query.query.to_http_query()
+		query: AF_HttpQuery = unlock_query.query.to_http_query()
 		response = query.execute(raise_for_status=True)
 		unlock_query.unlocked = True
 		return AF_ImportActionState.completed
@@ -186,7 +194,7 @@ class AF_OP_ExecuteImportPlan(bpy.types.Operator):
 		hdri_component = self.implementation.get_component_by_id(component_id=component_id)
 		hdri_target_path = os.path.join(self.implementation.local_directory, hdri_component.store.local_file_path)
 
-		world.create_world(world_name=hdri_component.name, hdr_image_path=hdri_target_path, af_namespace=self.af_namespace)
+		create_world(world_name=hdri_component.name, hdr_image_path=hdri_target_path, af_namespace=self.af_namespace)
 
 		return AF_ImportActionState.completed
 
@@ -195,11 +203,11 @@ class AF_OP_ExecuteImportPlan(bpy.types.Operator):
 
 		image_component = self.implementation.get_component_by_id(component_id=component_id)
 		image_target_path = os.path.join(self.implementation.local_directory, image_component.store.local_file_path)
-		target_material = material.get_or_create_material(material_name=image_component.handle_loose_material_map.material_name, af_namespace=self.af_namespace)
+		target_material = get_or_create_material(material_name=image_component.handle_loose_material_map.material_name, af_namespace=self.af_namespace)
 
-		map = af_constants.AF_MaterialMap.from_string_by_value(image_component.handle_loose_material_map.map)
+		map = AF_MaterialMap.from_string_by_value(image_component.handle_loose_material_map.map)
 
-		material.add_map_to_material(image_target_path=image_target_path, target_material=target_material, map=map)
+		add_map_to_material(image_target_path=image_target_path, target_material=target_material, map=map)
 
 		return AF_ImportActionState.completed
 

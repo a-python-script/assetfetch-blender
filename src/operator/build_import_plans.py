@@ -2,9 +2,8 @@ import os
 
 import bpy
 
-from ..property.core import *
-from ..util.addon_constants import *
-from ..util.af_constants import *
+from ..property.core import AF_PR_AssetFetch, AF_PR_Component
+from ..property.preferences import AF_PR_Preferences
 
 
 class AF_OP_BuildImportPlans(bpy.types.Operator):
@@ -33,9 +32,6 @@ class AF_OP_BuildImportPlans(bpy.types.Operator):
 
 				# Step 0: Set/create helpful variables
 
-				# Keeps track of which components were already processed.
-				# This becomes an interesting question when recursively resolving dependencies, for example when working with archives.
-				already_processed_component_ids = set()
 
 				# Keeps track of which of the unlocking queries offered by the provider are already scheduled to be called for this implementation.
 				already_scheduled_unlocking_query_ids = set()
